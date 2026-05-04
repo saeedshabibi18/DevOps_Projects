@@ -62,5 +62,4 @@ Final-year B.Tech student specializing in **DevOps & Cloud Engineering**.
 Currently seeking fresher/internship roles in DevOps and Cloud.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR-LINKEDIN-HERE)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](www.linkedin.com/in/
-/saeed-shabibi1800)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](www.linkedin.com/in//saeed-shabibi1800)
