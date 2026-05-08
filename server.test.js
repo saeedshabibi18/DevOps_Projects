@@ -37,3 +37,5 @@ test('addUser route exists', async () => {
   // 500 is ok here — no real DB in test environment
   expect([200, 302,404, 500]).toContain(response.status);
 });
+
+
