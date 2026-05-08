@@ -35,5 +35,5 @@ test('addUser route exists', async () => {
     .post('/addUser')
     .send('email=test@test.com&username=testuser&password=1234');
   // 500 is ok here — no real DB in test environment
- expect([200, 302, 404, 500]).toContain(response.status);
+  expect([200, 302,404, 500]).toContain(response.status);
 });
