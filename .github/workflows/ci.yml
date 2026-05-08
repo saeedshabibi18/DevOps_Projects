@@ -1,0 +1,87 @@
+name: XYZ University Portal — CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  # ─── JOB 1: TEST BACKEND ───
+  test-backend:
+    name: Test Node.js Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        # What: Downloads your repo onto the runner machine
+        # Why: Runner starts empty — needs your code first
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+        # What: Installs Node.js 20 on the runner
+        # Why: Your server.js needs Node.js to run
+
+      - name: Install dependencies
+        run: npm install
+        # What: Installs express, mongodb, jest, supertest
+        # Why: Same as running npm install locally
+
+      - name: Run tests
+        run: npm test
+        # What: Runs server.test.js using Jest
+        # Why: Proves your API routes work correctly
+
+  # ─── JOB 2: BUILD DOCKER IMAGE ───
+  build-docker:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: test-backend
+    # Why needs: Only build if tests pass — no point
+    # building broken code
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t xyz-university-portal:latest .
+        # What: Runs your Dockerfile and builds the image
+        # Why: Proves your Dockerfile has no errors
+
+      - name: Verify image was created
+        run: docker images
+        # What: Lists all Docker images
+        # Why: Confirms the image was built successfully
+
+  # ─── JOB 3: PUSH TO DOCKER HUB ───
+  push-to-dockerhub:
+    name: Push Image to Docker Hub
+    runs-on: ubuntu-latest
+    needs: build-docker
+    if: github.ref == 'refs/heads/main'
+    # Why if: Only push to Docker Hub on main branch
+    # not on every pull request
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        # What: Authenticates with Docker Hub
+        # Why: Need permission to push images
+
+      - name: Build and Push
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/xyz-university-portal:latest .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/xyz-university-portal:latest
+        # What: Builds image and uploads to Docker Hub
+        # Why: Stores your tested image for deployment anywhere
