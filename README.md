@@ -2,7 +2,7 @@
 
 A collection of hands-on DevOps projects demonstrating containerization, orchestration, and cloud-native application deployment.
 
----
+
 
 ## 📁 Projects
 
@@ -46,8 +46,6 @@ docker-compose up -d
 │  (port 3000)│     │  (port 27017)│    │  (port 8081) │
 └─────────────┘     └─────────────┘     └──────────────┘
         All running inside Docker network via Docker Compose
-```
-
 ---
 
 ## 🔖 Topics / Keywords
